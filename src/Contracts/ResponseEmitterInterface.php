@@ -8,15 +8,15 @@ use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
 /**
- * Emits an HTTP response to the client.
+ * Processes HTTP response emission for shutdown handling.
  */
 interface ResponseEmitterInterface
 {
     /**
-     * Emits the provided HTTP response.
+     * Processes HTTP response emission.
      *
-     * @param  ResponseInterface $response The response to send to the client.
-     * @return void              Sends the response output.
+     * @param  ResponseInterface $response The response to emit.
+     * @return void              Returns after response emission is delegated.
      * @throws Throwable         When response emission fails.
      */
     public function emit(ResponseInterface $response): void;

@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 
 /**
- * Creates an HTTP response for a shutdown error condition.
+ * Creates HTTP responses for shutdown exceptions.
  */
 interface ErrorResponderInterface
 {
@@ -18,8 +18,8 @@ interface ErrorResponderInterface
      *
      * @param  ServerRequestInterface $request             The request active during shutdown handling.
      * @param  Throwable              $exception           The exception representing the fatal shutdown error.
-     * @param  bool                   $displayErrorDetails True to include detailed error information.
-     * @return ResponseInterface      The generated HTTP response.
+     * @param  bool                   $displayErrorDetails Whether detailed error information should be included.
+     * @return ResponseInterface      Returns the generated HTTP response.
      * @throws Throwable              When response generation fails.
      */
     public function createResponse(
