@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace YourVendor\YourPackage\Adapters;
 
+use Closure;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
@@ -17,9 +18,9 @@ final readonly class CallableErrorResponder implements ErrorResponderInterface
     /**
      * Stores the callable that creates shutdown error responses.
      *
-     * @var \Closure(ServerRequestInterface,Throwable,bool):ResponseInterface
+     * @var Closure(ServerRequestInterface,Throwable,bool):ResponseInterface
      */
-    private \Closure $responder;
+    private Closure $responder;
 
     /**
      * Builds a callable-backed error responder adapter.
@@ -29,7 +30,7 @@ final readonly class CallableErrorResponder implements ErrorResponderInterface
      */
     public function __construct(callable $responder)
     {
-        $this->responder = \Closure::fromCallable($responder);
+        $this->responder = Closure::fromCallable($responder);
     }
 
     /**
