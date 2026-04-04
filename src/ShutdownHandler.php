@@ -150,10 +150,10 @@ final class ShutdownHandler
     }
 
     /**
-     * Builds the message used for the internal server error exception.
+     * Returns the error message for the configured detail level.
      *
      * @param  array{type?:int,message?:string,file?:string,line?:int} $error The normalized error payload used to derive message details.
-     * @return string                                                  Returns the exception message for the configured detail level.
+     * @return string                                                  The generated error message.
      * @internal This helper is only used by shutdown processing internals.
      */
     private function getErrorMessage(array $error): string
@@ -165,15 +165,6 @@ final class ShutdownHandler
         $errorFile = (string)($error['file'] ?? 'unknown');
         $errorLine = (int)($error['line'] ?? 0);
         $errorMessage = (string)($error['message'] ?? 'Unknown error');
-        $errorType = (int)($error['type'] ?? E_ERROR);
-
-        if ($errorType === E_USER_WARNING) {
-            return "WARNING: {$errorMessage}";
-        }
-
-        if ($errorType === E_USER_NOTICE) {
-            return "NOTICE: {$errorMessage}";
-        }
 
         return "FATAL ERROR: {$errorMessage} on line {$errorLine} in file {$errorFile}.";
     }
