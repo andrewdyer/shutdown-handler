@@ -17,6 +17,10 @@ use YourVendor\YourPackage\Tests\Support\TestResponseEmitter;
  */
 final class ShutdownHandlerTest extends TestCase
 {
+    // ------------------------------------------------------------------------
+    // Guard clause / early exit tests
+    // ------------------------------------------------------------------------
+
     /**
      * Asserts that shutdown handling exits early when no last error is available.
      */
@@ -67,6 +71,33 @@ final class ShutdownHandlerTest extends TestCase
         self::assertSame(0, $responder->calls);
         self::assertSame(0, $emitter->calls);
     }
+
+    /**
+     * Asserts that malformed errors are ignored during shutdown handling.
+     */
+    public function testIgnoresMalformedError(): void
+    {
+        $request = (new ServerRequestFactory())->createServerRequest('GET', '/');
+        $responder = new TestErrorResponder();
+        $emitter = new TestResponseEmitter();
+
+        $handler = new ShutdownHandler(
+            $request,
+            $responder,
+            $emitter,
+            false,
+            static fn (): array => []
+        );
+
+        $handler();
+
+        self::assertSame(0, $responder->calls);
+        self::assertSame(0, $emitter->calls);
+    }
+
+    // ------------------------------------------------------------------------
+    // Core behavior / happy path tests
+    // ------------------------------------------------------------------------
 
     /**
      * Asserts that fatal errors use a generic message when details are disabled.
@@ -132,28 +163,9 @@ final class ShutdownHandlerTest extends TestCase
         );
     }
 
-    /**
-     * Asserts that malformed errors are ignored during shutdown handling.
-     */
-    public function testIgnoresMalformedError(): void
-    {
-        $request = (new ServerRequestFactory())->createServerRequest('GET', '/');
-        $responder = new TestErrorResponder();
-        $emitter = new TestResponseEmitter();
-
-        $handler = new ShutdownHandler(
-            $request,
-            $responder,
-            $emitter,
-            false,
-            static fn (): array => []
-        );
-
-        $handler();
-
-        self::assertSame(0, $responder->calls);
-        self::assertSame(0, $emitter->calls);
-    }
+    // ------------------------------------------------------------------------
+    // Side effect / output handling tests
+    // ------------------------------------------------------------------------
 
     /**
      * Asserts that output buffers created after handler initialisation are cleared.
@@ -182,6 +194,10 @@ final class ShutdownHandlerTest extends TestCase
         self::assertSame($baselineLevel, ob_get_level());
     }
 
+    // ------------------------------------------------------------------------
+    // Failure propagation tests
+    // ------------------------------------------------------------------------
+
     /**
      * Asserts that exceptions from the response emitter are propagated.
      */
@@ -209,6 +225,10 @@ final class ShutdownHandlerTest extends TestCase
 
         $handler();
     }
+
+    // ------------------------------------------------------------------------
+    // API flexibility / last error resolver tests
+    // ------------------------------------------------------------------------
 
     /**
      * Asserts that non-closure callables can be used as the last error resolver.
