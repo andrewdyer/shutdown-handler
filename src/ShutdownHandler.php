@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\YourPackage;
+namespace AndrewDyer\Slim\Error;
 
+use AndrewDyer\Slim\Error\Contracts\ErrorResponderInterface;
+use AndrewDyer\Slim\Error\Contracts\ResponseEmitterInterface;
 use Closure;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpInternalServerErrorException;

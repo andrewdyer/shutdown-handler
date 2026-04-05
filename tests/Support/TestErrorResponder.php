@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\YourPackage\Tests\Support;
+namespace AndrewDyer\Slim\Error\Tests\Support;
 
+use AndrewDyer\Slim\Error\Contracts\ErrorResponderInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Psr7\Factory\ResponseFactory;
-use YourVendor\YourPackage\Contracts\ErrorResponderInterface;
 
 /**
  * Test error responder stub used by unit tests.

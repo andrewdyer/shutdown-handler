@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\YourPackage\Tests\Support;
+namespace AndrewDyer\Slim\Error\Tests\Support;
 
+use AndrewDyer\Slim\Error\Contracts\ResponseEmitterInterface;
 use Psr\Http\Message\ResponseInterface;
-use YourVendor\YourPackage\Contracts\ResponseEmitterInterface;
 
 /**
  * Response emitter test double for use in tests.

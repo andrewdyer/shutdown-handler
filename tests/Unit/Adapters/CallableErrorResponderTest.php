@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\YourPackage\Tests\Unit\Adapters;
+namespace AndrewDyer\Slim\Error\Tests\Unit\Adapters;
 
+use AndrewDyer\Slim\Error\Adapters\CallableErrorResponder;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -11,7 +12,6 @@ use RuntimeException;
 use Slim\Psr7\Factory\ResponseFactory;
 use Slim\Psr7\Factory\ServerRequestFactory;
 use Throwable;
-use YourVendor\YourPackage\Adapters\CallableErrorResponder;
 
 /**
  * Unit tests for CallableErrorResponder.

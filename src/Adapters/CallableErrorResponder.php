@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\YourPackage\Adapters;
+namespace AndrewDyer\Slim\Error\Adapters;
 
+use AndrewDyer\Slim\Error\Contracts\ErrorResponderInterface;
 use Closure;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
-use YourVendor\YourPackage\Contracts\ErrorResponderInterface;
 
 /**
  * Creates shutdown error responses by delegating to a callable.

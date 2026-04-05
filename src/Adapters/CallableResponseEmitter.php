@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\YourPackage\Adapters;
+namespace AndrewDyer\Slim\Error\Adapters;
 
+use AndrewDyer\Slim\Error\Contracts\ResponseEmitterInterface;
 use Closure;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
-use YourVendor\YourPackage\Contracts\ResponseEmitterInterface;
 
 /**
  * Processes shutdown response emission by delegating to a callable.

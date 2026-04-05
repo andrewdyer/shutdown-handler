@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\YourPackage\Tests\Unit\Adapters;
+namespace AndrewDyer\Slim\Error\Tests\Unit\Adapters;
 
+use AndrewDyer\Slim\Error\Adapters\CallableResponseEmitter;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Psr7\Factory\ResponseFactory;
-use YourVendor\YourPackage\Adapters\CallableResponseEmitter;
 
 /**
  * Unit tests for CallableResponseEmitter.

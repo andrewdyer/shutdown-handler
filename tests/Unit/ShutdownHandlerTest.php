@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace YourVendor\YourPackage\Tests\Unit;
+namespace AndrewDyer\Slim\Error\Tests\Unit;
 
+use AndrewDyer\Slim\Error\Contracts\ResponseEmitterInterface;
+use AndrewDyer\Slim\Error\ShutdownHandler;
+use AndrewDyer\Slim\Error\Tests\Support\TestErrorResponder;
+use AndrewDyer\Slim\Error\Tests\Support\TestResponseEmitter;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Psr7\Factory\ServerRequestFactory;
-use YourVendor\YourPackage\Contracts\ResponseEmitterInterface;
-use YourVendor\YourPackage\ShutdownHandler;
-use YourVendor\YourPackage\Tests\Support\TestErrorResponder;
-use YourVendor\YourPackage\Tests\Support\TestResponseEmitter;
 
 /**
  * Unit tests for ShutdownHandler.
