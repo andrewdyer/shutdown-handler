@@ -209,4 +209,64 @@ final class ShutdownHandlerTest extends TestCase
 
         $handler();
     }
+
+    /**
+     * Asserts that non-closure callables can be used as the last error resolver.
+     */
+    public function testAcceptsInvokableCallableAsLastErrorResolver(): void
+    {
+        $request = (new ServerRequestFactory())->createServerRequest('GET', '/');
+        $responder = new TestErrorResponder();
+        $emitter = new TestResponseEmitter();
+
+        $resolver = new class () {
+            public function __invoke(): array
+            {
+                return ['type' => E_ERROR];
+            }
+        };
+
+        $handler = new ShutdownHandler(
+            $request,
+            $responder,
+            $emitter,
+            false,
+            $resolver
+        );
+
+        $handler();
+
+        self::assertSame(1, $responder->calls);
+        self::assertSame(1, $emitter->calls);
+    }
+
+    /**
+     * Asserts that array callables can be used as the last error resolver.
+     */
+    public function testAcceptsArrayCallableAsLastErrorResolver(): void
+    {
+        $request = (new ServerRequestFactory())->createServerRequest('GET', '/');
+        $responder = new TestErrorResponder();
+        $emitter = new TestResponseEmitter();
+
+        $resolver = new class () {
+            public function resolve(): array
+            {
+                return ['type' => E_ERROR];
+            }
+        };
+
+        $handler = new ShutdownHandler(
+            $request,
+            $responder,
+            $emitter,
+            false,
+            [$resolver, 'resolve']
+        );
+
+        $handler();
+
+        self::assertSame(1, $responder->calls);
+        self::assertSame(1, $emitter->calls);
+    }
 }

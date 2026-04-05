@@ -79,7 +79,7 @@ final class ShutdownHandler
      * @param  ErrorResponderInterface  $errorResponder      The collaborator that creates shutdown error responses.
      * @param  ResponseEmitterInterface $responseEmitter     The collaborator that emits shutdown error responses.
      * @param  bool                     $displayErrorDetails Whether error details should be included in responses.
-     * @param  Closure|null             $lastErrorResolver   An optional resolver that returns the last PHP error.
+     * @param  callable|null            $lastErrorResolver   An optional callable that returns the last PHP error payload.
      * @return void                     Returns after assigning immutable dependencies.
      */
     public function __construct(
@@ -87,13 +87,15 @@ final class ShutdownHandler
         ErrorResponderInterface $errorResponder,
         ResponseEmitterInterface $responseEmitter,
         bool $displayErrorDetails,
-        ?Closure $lastErrorResolver = null
+        ?callable $lastErrorResolver = null
     ) {
         $this->request = $request;
         $this->errorResponder = $errorResponder;
         $this->responseEmitter = $responseEmitter;
         $this->displayErrorDetails = $displayErrorDetails;
-        $this->lastErrorResolver = $lastErrorResolver;
+        $this->lastErrorResolver = $lastErrorResolver !== null
+            ? Closure::fromCallable($lastErrorResolver)
+            : null;
         $this->initialOutputBufferLevel = ob_get_level();
     }
 
