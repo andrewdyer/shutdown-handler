@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace AndrewDyer\Slim\Error\Tests\Unit;
+namespace AndrewDyer\Slim\Error\Tests\Unit\Handlers;
 
 use AndrewDyer\Slim\Error\Contracts\ResponseEmitterInterface;
-use AndrewDyer\Slim\Error\ShutdownHandler;
+use AndrewDyer\Slim\Error\Handlers\ShutdownHandler;
 use AndrewDyer\Slim\Error\Tests\Support\TestErrorResponder;
 use AndrewDyer\Slim\Error\Tests\Support\TestResponseEmitter;
 use PHPUnit\Framework\TestCase;
