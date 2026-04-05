@@ -37,7 +37,7 @@ final readonly class CallableResponseEmitter implements ResponseEmitterInterface
      *
      * @param  ResponseInterface $response The response to emit.
      * @return void              Returns after delegating response emission.
-     * @throws Throwable        When the wrapped emitter callable fails.
+     * @throws Throwable         When the wrapped emitter callable fails.
      */
     public function emit(ResponseInterface $response): void
     {
