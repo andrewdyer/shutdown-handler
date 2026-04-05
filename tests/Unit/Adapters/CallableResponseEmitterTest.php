@@ -14,42 +14,42 @@ use YourVendor\YourPackage\Adapters\CallableResponseEmitter;
  */
 final class CallableResponseEmitterTest extends TestCase
 {
-	/**
-	 * Asserts that emission is delegated to the provided callable.
-	 */
-	public function testEmitDelegatesToCallable(): void
-	{
-		$calls = 0;
-		$capturedResponse = null;
-		$expectedResponse = (new ResponseFactory())->createResponse(204);
+    /**
+     * Asserts that emission is delegated to the provided callable.
+     */
+    public function testEmitDelegatesToCallable(): void
+    {
+        $calls = 0;
+        $capturedResponse = null;
+        $expectedResponse = (new ResponseFactory())->createResponse(204);
 
-		$adapter = new CallableResponseEmitter(
-			static function (ResponseInterface $response) use (&$calls, &$capturedResponse): void {
-				$calls++;
-				$capturedResponse = $response;
-			}
-		);
+        $adapter = new CallableResponseEmitter(
+            static function(ResponseInterface $response) use (&$calls, &$capturedResponse): void {
+                $calls++;
+                $capturedResponse = $response;
+            }
+        );
 
-		$adapter->emit($expectedResponse);
+        $adapter->emit($expectedResponse);
 
-		self::assertSame(1, $calls);
-		self::assertSame($expectedResponse, $capturedResponse);
-	}
+        self::assertSame(1, $calls);
+        self::assertSame($expectedResponse, $capturedResponse);
+    }
 
-	/**
-	 * Asserts that exceptions from the emitter callable are propagated.
-	 */
-	public function testEmitBubblesExceptionFromCallable(): void
-	{
-		$this->expectException(\RuntimeException::class);
-		$this->expectExceptionMessage('Emitter failed');
+    /**
+     * Asserts that exceptions from the emitter callable are propagated.
+     */
+    public function testEmitBubblesExceptionFromCallable(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Emitter failed');
 
-		$adapter = new CallableResponseEmitter(
-			static function (ResponseInterface $response): void {
-				throw new \RuntimeException('Emitter failed');
-			}
-		);
+        $adapter = new CallableResponseEmitter(
+            static function(ResponseInterface $response): void {
+                throw new \RuntimeException('Emitter failed');
+            }
+        );
 
-		$adapter->emit((new ResponseFactory())->createResponse(500));
-	}
+        $adapter->emit((new ResponseFactory())->createResponse(500));
+    }
 }

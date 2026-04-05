@@ -18,73 +18,73 @@ use YourVendor\YourPackage\Adapters\CallableErrorResponder;
  */
 final class CallableErrorResponderTest extends TestCase
 {
-	/**
-	 * Asserts that response creation is delegated to the provided callable.
-	 */
-	public function testCreateResponseDelegatesToCallable(): void
-	{
-		$request = (new ServerRequestFactory())->createServerRequest('GET', '/');
-		$exception = new RuntimeException('Fatal shutdown error');
-		$displayErrorDetails = true;
-		$expectedResponse = (new ResponseFactory())->createResponse(500);
+    /**
+     * Asserts that response creation is delegated to the provided callable.
+     */
+    public function testCreateResponseDelegatesToCallable(): void
+    {
+        $request = (new ServerRequestFactory())->createServerRequest('GET', '/');
+        $exception = new RuntimeException('Fatal shutdown error');
+        $displayErrorDetails = true;
+        $expectedResponse = (new ResponseFactory())->createResponse(500);
 
-		$calls = 0;
-		$capturedRequest = null;
-		$capturedException = null;
-		$capturedDisplayErrorDetails = null;
+        $calls = 0;
+        $capturedRequest = null;
+        $capturedException = null;
+        $capturedDisplayErrorDetails = null;
 
-		$adapter = new CallableErrorResponder(
-			static function (
-				ServerRequestInterface $request,
-				Throwable $exception,
-				bool $displayErrorDetails
-			) use (
-				&$calls,
-				&$capturedRequest,
-				&$capturedException,
-				&$capturedDisplayErrorDetails,
-				$expectedResponse
-			): ResponseInterface {
-				$calls++;
-				$capturedRequest = $request;
-				$capturedException = $exception;
-				$capturedDisplayErrorDetails = $displayErrorDetails;
+        $adapter = new CallableErrorResponder(
+            static function(
+                ServerRequestInterface $request,
+                Throwable $exception,
+                bool $displayErrorDetails
+            ) use (
+                &$calls,
+                &$capturedRequest,
+                &$capturedException,
+                &$capturedDisplayErrorDetails,
+                $expectedResponse
+            ): ResponseInterface {
+                $calls++;
+                $capturedRequest = $request;
+                $capturedException = $exception;
+                $capturedDisplayErrorDetails = $displayErrorDetails;
 
-				return $expectedResponse;
-			}
-		);
+                return $expectedResponse;
+            }
+        );
 
-		$actualResponse = $adapter->createResponse($request, $exception, $displayErrorDetails);
+        $actualResponse = $adapter->createResponse($request, $exception, $displayErrorDetails);
 
-		self::assertSame(1, $calls);
-		self::assertSame($request, $capturedRequest);
-		self::assertSame($exception, $capturedException);
-		self::assertTrue($capturedDisplayErrorDetails);
-		self::assertSame($expectedResponse, $actualResponse);
-	}
+        self::assertSame(1, $calls);
+        self::assertSame($request, $capturedRequest);
+        self::assertSame($exception, $capturedException);
+        self::assertTrue($capturedDisplayErrorDetails);
+        self::assertSame($expectedResponse, $actualResponse);
+    }
 
-	/**
-	 * Asserts that exceptions from the responder callable are propagated.
-	 */
-	public function testCreateResponseBubblesExceptionFromCallable(): void
-	{
-		$this->expectException(RuntimeException::class);
-		$this->expectExceptionMessage('Responder failed');
+    /**
+     * Asserts that exceptions from the responder callable are propagated.
+     */
+    public function testCreateResponseBubblesExceptionFromCallable(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Responder failed');
 
-		$adapter = new CallableErrorResponder(
-			static function (
-				ServerRequestInterface $request,
-				Throwable $exception,
-				bool $displayErrorDetails
-			): ResponseInterface {
-				throw new RuntimeException('Responder failed');
-			}
-		);
+        $adapter = new CallableErrorResponder(
+            static function(
+                ServerRequestInterface $request,
+                Throwable $exception,
+                bool $displayErrorDetails
+            ): ResponseInterface {
+                throw new RuntimeException('Responder failed');
+            }
+        );
 
-		$adapter->createResponse(
-			(new ServerRequestFactory())->createServerRequest('GET', '/'),
-			new RuntimeException('boom'),
-			false
-		);
-	}
+        $adapter->createResponse(
+            (new ServerRequestFactory())->createServerRequest('GET', '/'),
+            new RuntimeException('boom'),
+            false
+        );
+    }
 }
