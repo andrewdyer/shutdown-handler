@@ -10,7 +10,7 @@ use Slim\Psr7\Factory\ResponseFactory;
 use YourVendor\YourPackage\Contracts\ErrorResponderInterface;
 
 /**
- * Unit tests for TestErrorResponder.
+ * Test error responder stub used by unit tests.
  */
 final class TestErrorResponder implements ErrorResponderInterface
 {

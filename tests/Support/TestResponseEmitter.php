@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use YourVendor\YourPackage\Contracts\ResponseEmitterInterface;
 
 /**
- * Unit tests for TestResponseEmitter.
+ * Response emitter test double for use in tests.
  */
 final class TestResponseEmitter implements ResponseEmitterInterface
 {
