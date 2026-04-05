@@ -1,37 +1,22 @@
-![PHP Package Template](https://public-assets.andrewdyer.rocks/images/covers/php-package-template.png)
+# Slim Error
 
-# PHP Package Template
+A composable error handling layer for Slim applications, enabling consistent and extensible handling of application failures.
 
-A template for creating PHP 8.3+ packages.
+## Introduction
 
-## ⚖️ License
+This library integrates with [Slim Framework 4](https://www.slimframework.com/) and leverages [PSR-7 HTTP Message](https://www.php-fig.org/psr/psr-7/) standards to convert fatal shutdown failures into consistent HTTP responses. It achieves this through pluggable responder and emitter strategies, allowing applications to compose error handling logic that is both extensible and framework-aligned.
+
+## Prerequisites
+
+- **[PHP](https://www.php.net/)**: Version 8.3 or higher is required.
+- **[Composer](https://getcomposer.org/)**: Dependency management tool for PHP.
+
+## Installation
+
+```bash
+composer require andrewdyer/slim-error
+```
+
+## License
 
 Licensed under the [MIT license](https://opensource.org/licenses/MIT) and is free for private or commercial projects.
-
-## ✨ Introduction
-
-This template provides a solid foundation for building modern PHP packages. It’s designed to help you hit the ground running and focus on building your package functionality without worrying about boilerplate setup like autoloading, testing, or Composer configuration.
-
-## 📋 Prerequisites
-
-Before you begin, ensure you have met the following requirements:
-
-- **PHP**: Version 8.3 or higher.
-- **[Composer](https://getcomposer.org)**: A dependency manager for PHP, used to install packages and autoload your code.
-
-## 🛠️ Features
-
-This template includes the following tools and configurations:
-
-- [PSR-4 autoloading](https://www.php-fig.org/psr/psr-4/) via Composer
-- [PHPUnit](https://phpunit.de/) for unit testing to ensure the reliability of your code.
-- [PHP Coding Standards Fixer](https://cs.symfony.com/) for maintaining consistent code style.
-- CI (Continuous Integration) setup with [GitHub Actions](https://github.com/features/actions) for automated testing.
-
-## 🚀 Getting Started
-
-If you like what you've seen so far and think this setup fits your needs, you can quickly get started by clicking the **Use this template** button at the top of the repository on GitHub.
-
-## 🤝 Contributing
-
-Found a bug or want to improve this package? Feel free to open a pull request or submit an issue.
