@@ -10,8 +10,6 @@ use Closure;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpInternalServerErrorException;
 use Throwable;
-use YourVendor\YourPackage\Contracts\ErrorResponderInterface;
-use YourVendor\YourPackage\Contracts\ResponseEmitterInterface;
 
 /**
  * Processes fatal shutdown errors and emits the generated HTTP response.
