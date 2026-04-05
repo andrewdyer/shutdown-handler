@@ -66,6 +66,13 @@ final class ShutdownHandler
     private readonly ?Closure $lastErrorResolver;
 
     /**
+     * Stores the output buffer level at the time the handler is created.
+     *
+     * @var int
+     */
+    private readonly int $initialOutputBufferLevel;
+
+    /**
      * Builds a shutdown handler with response collaborators.
      *
      * @param  ServerRequestInterface   $request             The request active during shutdown handling.
@@ -87,6 +94,7 @@ final class ShutdownHandler
         $this->responseEmitter = $responseEmitter;
         $this->displayErrorDetails = $displayErrorDetails;
         $this->lastErrorResolver = $lastErrorResolver;
+        $this->initialOutputBufferLevel = ob_get_level();
     }
 
     /**
@@ -113,9 +121,7 @@ final class ShutdownHandler
             $this->displayErrorDetails
         );
 
-        if (ob_get_level() > 0) {
-            ob_clean();
-        }
+        $this->clearOutputBuffers();
 
         $this->responseEmitter->emit($response);
     }
@@ -167,5 +173,21 @@ final class ShutdownHandler
         $errorMessage = (string)($error['message'] ?? 'Unknown error');
 
         return "FATAL ERROR: {$errorMessage} on line {$errorLine} in file {$errorFile}.";
+    }
+
+    /**
+     * Clears output buffers created after handler initialisation.
+     *
+     * @return void Returns after attempting to clear and close active buffers.
+     * @internal This helper is only used by shutdown processing internals.
+     */
+    private function clearOutputBuffers(): void
+    {
+        while (ob_get_level() > $this->initialOutputBufferLevel) {
+            if (!ob_end_clean()) {
+                ob_clean();
+                break;
+            }
+        }
     }
 }

@@ -146,7 +146,7 @@ final class ShutdownHandlerTest extends TestCase
             $responder,
             $emitter,
             false,
-            static fn (): array => [] // malformed
+            static fn (): array => []
         );
 
         $handler();
@@ -156,12 +156,11 @@ final class ShutdownHandlerTest extends TestCase
     }
 
     /**
-     * Asserts that output buffers are cleared before response emission.
+     * Asserts that output buffers created after handler initialisation are cleared.
      */
-    public function testClearsOutputBufferBeforeEmitting(): void
+    public function testClearsOnlyNewOutputBuffers(): void
     {
-        ob_start();
-        echo 'garbage output';
+        $baselineLevel = ob_get_level();
 
         $request = (new ServerRequestFactory())->createServerRequest('GET', '/');
         $responder = new TestErrorResponder();
@@ -175,10 +174,12 @@ final class ShutdownHandlerTest extends TestCase
             static fn (): array => ['type' => E_ERROR]
         );
 
+        ob_start();
+        echo 'test buffer';
+
         $handler();
 
-        self::assertSame('', ob_get_contents());
-        ob_end_clean();
+        self::assertSame($baselineLevel, ob_get_level());
     }
 
     /**
@@ -191,17 +192,7 @@ final class ShutdownHandlerTest extends TestCase
         $request = (new ServerRequestFactory())->createServerRequest('GET', '/');
         $responder = new TestErrorResponder();
 
-        /**
-         * Processes response emission with an intentional failure.
-         */
         $emitter = new class () implements ResponseEmitterInterface {
-            /**
-             * Processes HTTP response emission.
-             *
-             * @param  ResponseInterface $response Receives the response to emit.
-             * @return void              Returns after throwing an exception for test coverage.
-             * @throws \RuntimeException Always thrown to simulate emitter failure.
-             */
             public function emit(ResponseInterface $response): void
             {
                 throw new \RuntimeException('Emitter failed');
