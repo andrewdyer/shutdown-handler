@@ -1,6 +1,6 @@
 # Shutdown Handler
 
-A shutdown handler for version 4 [Slim Framework](https://www.slimframework.com/) applications that converts fatal errors into consistent HTTP responses through pluggable responder and emitter strategies.
+A shutdown handler for [Slim Framework](https://www.slimframework.com/) applications that converts fatal errors into consistent HTTP responses through pluggable responder and emitter strategies.
 
 ## Introduction
 
