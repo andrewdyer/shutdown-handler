@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AndrewDyer\Slim\Error\Adapters;
+namespace AndrewDyer\ShutdownHandler\Adapters;
 
-use AndrewDyer\Slim\Error\Contracts\ErrorResponderInterface;
+use AndrewDyer\ShutdownHandler\Contracts\ErrorResponderInterface;
 use Closure;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

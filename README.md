@@ -1,10 +1,10 @@
-# Slim Error
+# Shutdown Handler
 
-A composable error handling layer for Slim applications, enabling consistent and extensible handling of application failures.
+A shutdown handler for version 4 [Slim Framework](https://www.slimframework.com/) applications that converts fatal errors into consistent HTTP responses through pluggable responder and emitter strategies.
 
 ## Introduction
 
-This library integrates with [Slim Framework 4](https://www.slimframework.com/) and leverages [PSR-7 HTTP Message](https://www.php-fig.org/psr/psr-7/) standards to convert fatal shutdown failures into consistent HTTP responses. It achieves this through pluggable responder and emitter strategies, allowing applications to compose error handling logic that is both extensible and framework-aligned.
+This library provides a shutdown handler for Slim applications. It intercepts fatal errors and transforms them into consistent HTTP responses, maintaining predictable application behaviour. The handler is fully composable, allowing different responder and emitter implementations to be combined as required, and integrates seamlessly with existing Slim error handling and response emission workflows.
 
 ## Prerequisites
 
@@ -14,21 +14,19 @@ This library integrates with [Slim Framework 4](https://www.slimframework.com/) 
 ## Installation
 
 ```bash
-composer require andrewdyer/slim-error
+composer require andrewdyer/shutdown-handler
 ```
 
-## Features
+## Getting Started
 
-Slim Error provides a composable error handling layer for Slim applications. Features can be adopted independently depending on your needs.
+An error responder and response emitter are required before registering the shutdown handler.
 
-### Pluggable Error Responders
+### 1. Create an error responder
 
 Error responders define how errors are transformed into HTTP responses.
 
-Implement the `ErrorResponderInterface` to customise response structure and content:
-
 ```php
-use AndrewDyer\Slim\Error\Contracts\ErrorResponderInterface;
+use AndrewDyer\ShutdownHandler\Contracts\ErrorResponderInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
@@ -45,10 +43,10 @@ final class MyErrorResponder implements ErrorResponderInterface
 }
 ```
 
-Alternatively, reuse existing logic with the `CallableErrorResponder` adapter:
+Alternatively, wrap existing logic using `CallableErrorResponder`:
 
 ```php
-use AndrewDyer\Slim\Error\Adapters\CallableErrorResponder;
+use AndrewDyer\ShutdownHandler\Adapters\CallableErrorResponder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
@@ -68,16 +66,14 @@ $errorResponder = new CallableErrorResponder(
 );
 ```
 
-The callable must match the `(ServerRequestInterface, Throwable, bool): ResponseInterface` signature.
+The callable must accept a request, exception, and display flag, and return a PSR-7 response.
 
-### Flexible Response Emitters
+### 2. Create a response emitter
 
 Response emitters are responsible for sending responses to the client.
 
-Implement the `ResponseEmitterInterface` to control emission behaviour:
-
 ```php
-use AndrewDyer\Slim\Error\Contracts\ResponseEmitterInterface;
+use AndrewDyer\ShutdownHandler\Contracts\ResponseEmitterInterface;
 use Psr\Http\Message\ResponseInterface;
 
 final class MyResponseEmitter implements ResponseEmitterInterface
@@ -89,10 +85,10 @@ final class MyResponseEmitter implements ResponseEmitterInterface
 }
 ```
 
-Or wrap an existing emitter using the `CallableResponseEmitter` adapter:
+Alternatively, wrap an existing emitter using `CallableResponseEmitter`:
 
 ```php
-use AndrewDyer\Slim\Error\Adapters\CallableResponseEmitter;
+use AndrewDyer\ShutdownHandler\Adapters\CallableResponseEmitter;
 use Psr\Http\Message\ResponseInterface;
 
 $responseEmitter = new CallableResponseEmitter(
@@ -102,14 +98,12 @@ $responseEmitter = new CallableResponseEmitter(
 
 The adapter wraps an existing emitter implementation.
 
-### Shutdown Handling
+## Usage
 
-The shutdown handler captures fatal errors during application execution and converts them into consistent HTTP responses.
-
-Once a responder and emitter are configured, register the handler:
+Register the shutdown handler to convert fatal errors into consistent HTTP responses:
 
 ```php
-use AndrewDyer\Slim\Error\Handlers\ShutdownHandler;
+use AndrewDyer\ShutdownHandler\ShutdownHandler;
 
 $shutdownHandler = new ShutdownHandler(
     $request,
@@ -121,60 +115,7 @@ $shutdownHandler = new ShutdownHandler(
 register_shutdown_function($shutdownHandler);
 ```
 
-This ensures fatal errors are intercepted and transformed into structured responses.
-
-#### Complete Slim integration
-
-A typical Slim integration using callable adapters might look like:
-
-```php
-use AndrewDyer\Slim\Error\Adapters\CallableErrorResponder;
-use AndrewDyer\Slim\Error\Adapters\CallableResponseEmitter;
-use AndrewDyer\Slim\Error\Handlers\ShutdownHandler;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Throwable;
-
-$shutdownHandler = new ShutdownHandler(
-    $request,
-    new CallableErrorResponder(
-        static fn (
-            ServerRequestInterface $request,
-            Throwable $exception,
-            bool $displayErrorDetails
-        ): ResponseInterface => $httpErrorHandler(
-            $request,
-            $exception,
-            $displayErrorDetails,
-            false,
-            false
-        )
-    ),
-    new CallableResponseEmitter(
-        static fn (ResponseInterface $response): void => $responseEmitter->emit($response)
-    ),
-    $displayErrorDetails
-);
-
-register_shutdown_function($shutdownHandler);
-```
-
-This approach allows existing Slim error handling and response emission logic to be reused without modification.
-
-### Composable Architecture
-
-Slim Error is designed for composability. Responders and emitters can be freely combined to suit your application.
-
-```php
-$shutdownHandler = new ShutdownHandler(
-    $request,
-    $errorResponder,
-    $responseEmitter,
-    $displayErrorDetails
-);
-```
-
-By decoupling responsibilities, the library enables flexible integration, easier testing, and long-term maintainability.
+The `$errorResponder` and `$responseEmitter` values can come from custom implementations or the callable adapters shown in Getting Started.
 
 ## License
 

@@ -1,18 +1,18 @@
 {
-  "name": "andrewdyer/slim-error",
+  "name": "andrewdyer/shutdown-handler",
   "version": "0.1.0",
-  "description": "A composable error handling layer for Slim applications, enabling consistent and extensible handling of application failures",
+  "description": "A shutdown handler for version 4 Slim Framework applications that converts fatal errors into consistent HTTP responses through pluggable responder and emitter strategies",
   "keywords": ["php", "slim", "shutdown", "error-handling", "psr-7"],
   "type": "library",
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "AndrewDyer\\Slim\\Error\\": "src/"
+      "AndrewDyer\\ShutdownHandler\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "AndrewDyer\\Slim\\Error\\Tests\\": "tests/"
+      "AndrewDyer\\ShutdownHandler\\Tests\\": "tests/"
     }
   },
   "require": {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AndrewDyer\Slim\Error\Tests\Unit\Adapters;
+namespace AndrewDyer\ShutdownHandler\Tests\Unit\Adapters;
 
-use AndrewDyer\Slim\Error\Adapters\CallableErrorResponder;
+use AndrewDyer\ShutdownHandler\Adapters\CallableErrorResponder;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace AndrewDyer\Slim\Error\Tests\Unit\Handlers;
+namespace AndrewDyer\ShutdownHandler\Tests\Unit;
 
-use AndrewDyer\Slim\Error\Contracts\ResponseEmitterInterface;
-use AndrewDyer\Slim\Error\Handlers\ShutdownHandler;
-use AndrewDyer\Slim\Error\Tests\Support\TestErrorResponder;
-use AndrewDyer\Slim\Error\Tests\Support\TestResponseEmitter;
+use AndrewDyer\ShutdownHandler\Contracts\ResponseEmitterInterface;
+use AndrewDyer\ShutdownHandler\ShutdownHandler;
+use AndrewDyer\ShutdownHandler\Tests\Support\TestErrorResponder;
+use AndrewDyer\ShutdownHandler\Tests\Support\TestResponseEmitter;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Psr7\Factory\ServerRequestFactory;
