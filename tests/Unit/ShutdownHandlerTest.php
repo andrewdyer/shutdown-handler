@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AndrewDyer\ShutdownHandler\Tests;
+namespace AndrewDyer\ShutdownHandler\Tests\Unit;
 
 use AndrewDyer\ShutdownHandler\Contracts\ResponseEmitterInterface;
 use AndrewDyer\ShutdownHandler\ShutdownHandler;
