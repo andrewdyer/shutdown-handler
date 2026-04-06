@@ -1,4 +1,4 @@
-# Slim Error
+# Shutdown Handler
 
 A shutdown handler for Slim applications that converts fatal errors into consistent HTTP responses through pluggable responder and emitter strategies.
 
