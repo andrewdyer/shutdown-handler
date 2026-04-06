@@ -14,7 +14,7 @@ This library integrates with [Slim Framework 4](https://www.slimframework.com/) 
 ## Installation
 
 ```bash
-composer require andrewdyer/slim-error
+composer require andrewdyer/shutdown-handler
 ```
 
 ## Features

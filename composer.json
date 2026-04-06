@@ -1,5 +1,5 @@
 {
-  "name": "andrewdyer/slim-error",
+  "name": "andrewdyer/shutdown-handler",
   "version": "0.1.0",
   "description": "A composable error handling layer for Slim applications, enabling consistent and extensible handling of application failures",
   "keywords": ["php", "slim", "shutdown", "error-handling", "psr-7"],
