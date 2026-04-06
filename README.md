@@ -4,7 +4,7 @@ A shutdown handler for version 4 [Slim Framework](https://www.slimframework.com/
 
 ## Introduction
 
-This library provides a shutdown handler for Slim applications that converts fatal errors into consistent HTTP responses through pluggable responder and emitter strategies, so fatal errors are converted through responder and emitter strategies into consistent HTTP responses.
+This library provides a shutdown handler for Slim applications. It intercepts fatal errors and transforms them into consistent HTTP responses, maintaining predictable application behaviour. The handler is fully composable, allowing different responder and emitter implementations to be combined as required, and integrates seamlessly with existing Slim error handling and response emission workflows.
 
 ## Prerequisites
 
