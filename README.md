@@ -1,6 +1,6 @@
 # Slim Error
 
-A composable error handling layer for Slim applications, enabling consistent and extensible handling of application failures.
+A shutdown handler for Slim applications that converts fatal errors into consistent HTTP responses through pluggable responder and emitter strategies.
 
 ## Introduction
 
