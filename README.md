@@ -49,11 +49,26 @@ Alternatively, reuse existing logic with the `CallableErrorResponder` adapter:
 
 ```php
 use AndrewDyer\Slim\Error\Adapters\CallableErrorResponder;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Throwable;
 
-$errorResponder = new CallableErrorResponder($httpErrorHandler);
+$errorResponder = new CallableErrorResponder(
+    static fn (
+        ServerRequestInterface $request,
+        Throwable $exception,
+        bool $displayErrorDetails
+    ): ResponseInterface => $httpErrorHandler(
+        $request,
+        $exception,
+        $displayErrorDetails,
+        false,
+        false
+    )
+);
 ```
 
-This allows existing error handling logic to be reused without modification.
+The callable must match the `(ServerRequestInterface, Throwable, bool): ResponseInterface` signature.
 
 ### Flexible Response Emitters
 
@@ -74,15 +89,18 @@ final class MyResponseEmitter implements ResponseEmitterInterface
 }
 ```
 
-Or wrap existing emitters using the `CallableResponseEmitter` adapter:
+Or wrap an existing emitter using the `CallableResponseEmitter` adapter:
 
 ```php
 use AndrewDyer\Slim\Error\Adapters\CallableResponseEmitter;
+use Psr\Http\Message\ResponseInterface;
 
-$responseEmitter = new CallableResponseEmitter([$responseEmitter, 'emit']);
+$responseEmitter = new CallableResponseEmitter(
+    static fn (ResponseInterface $response): void => $slimEmitter->emit($response)
+);
 ```
 
-This enables seamless integration with existing response emitters.
+The adapter wraps an existing emitter implementation.
 
 ### Shutdown Handling
 
