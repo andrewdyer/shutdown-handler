@@ -4,7 +4,7 @@ A shutdown handler for Slim applications that converts fatal errors into consist
 
 ## Introduction
 
-This library integrates with [Slim Framework 4](https://www.slimframework.com/) and leverages [PSR-7 HTTP Message](https://www.php-fig.org/psr/psr-7/) standards to convert fatal shutdown failures into consistent HTTP responses. It achieves this through pluggable responder and emitter strategies, allowing applications to compose error handling logic that is both extensible and framework-aligned.
+This library provides a shutdown handler for Slim applications that converts fatal errors into consistent HTTP responses through pluggable responder and emitter strategies.
 
 ## Prerequisites
 
