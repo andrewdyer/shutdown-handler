@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace AndrewDyer\Slim\Error;
+namespace AndrewDyer\ShutdownHandler;
 
-use AndrewDyer\Slim\Error\Contracts\ErrorResponderInterface;
-use AndrewDyer\Slim\Error\Contracts\ResponseEmitterInterface;
+use AndrewDyer\ShutdownHandler\Contracts\ErrorResponderInterface;
+use AndrewDyer\ShutdownHandler\Contracts\ResponseEmitterInterface;
 use Closure;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpInternalServerErrorException;

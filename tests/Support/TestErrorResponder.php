@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AndrewDyer\Slim\Error\Tests\Support;
+namespace AndrewDyer\ShutdownHandler\Tests\Support;
 
-use AndrewDyer\Slim\Error\Contracts\ErrorResponderInterface;
+use AndrewDyer\ShutdownHandler\Contracts\ErrorResponderInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Psr7\Factory\ResponseFactory;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AndrewDyer\Slim\Error\Tests\Support;
+namespace AndrewDyer\ShutdownHandler\Tests\Support;
 
-use AndrewDyer\Slim\Error\Contracts\ResponseEmitterInterface;
+use AndrewDyer\ShutdownHandler\Contracts\ResponseEmitterInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**

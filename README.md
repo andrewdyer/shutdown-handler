@@ -28,7 +28,7 @@ Error responders define how errors are transformed into HTTP responses.
 Implement the `ErrorResponderInterface` to customise response structure and content:
 
 ```php
-use AndrewDyer\Slim\Error\Contracts\ErrorResponderInterface;
+use AndrewDyer\ShutdownHandler\Contracts\ErrorResponderInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
@@ -48,7 +48,7 @@ final class MyErrorResponder implements ErrorResponderInterface
 Alternatively, reuse existing logic with the `CallableErrorResponder` adapter:
 
 ```php
-use AndrewDyer\Slim\Error\Adapters\CallableErrorResponder;
+use AndrewDyer\ShutdownHandler\Adapters\CallableErrorResponder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
@@ -77,7 +77,7 @@ Response emitters are responsible for sending responses to the client.
 Implement the `ResponseEmitterInterface` to control emission behaviour:
 
 ```php
-use AndrewDyer\Slim\Error\Contracts\ResponseEmitterInterface;
+use AndrewDyer\ShutdownHandler\Contracts\ResponseEmitterInterface;
 use Psr\Http\Message\ResponseInterface;
 
 final class MyResponseEmitter implements ResponseEmitterInterface
@@ -92,7 +92,7 @@ final class MyResponseEmitter implements ResponseEmitterInterface
 Or wrap an existing emitter using the `CallableResponseEmitter` adapter:
 
 ```php
-use AndrewDyer\Slim\Error\Adapters\CallableResponseEmitter;
+use AndrewDyer\ShutdownHandler\Adapters\CallableResponseEmitter;
 use Psr\Http\Message\ResponseInterface;
 
 $responseEmitter = new CallableResponseEmitter(
@@ -109,7 +109,7 @@ The shutdown handler captures fatal errors during application execution and conv
 Once a responder and emitter are configured, register the handler:
 
 ```php
-use AndrewDyer\Slim\Error\ShutdownHandler;
+use AndrewDyer\ShutdownHandler\ShutdownHandler;
 
 $shutdownHandler = new ShutdownHandler(
     $request,
@@ -128,7 +128,7 @@ This ensures fatal errors are intercepted and transformed into structured respon
 A typical Slim integration using callable adapters might look like:
 
 ```php
-use AndrewDyer\Slim\Error\Adapters\CallableErrorResponder;use AndrewDyer\Slim\Error\Adapters\CallableResponseEmitter;use AndrewDyer\Slim\Error\ShutdownHandler;use Psr\Http\Message\ResponseInterface;use Psr\Http\Message\ServerRequestInterface;
+use AndrewDyer\ShutdownHandler\Adapters\CallableErrorResponder;use AndrewDyer\ShutdownHandler\Adapters\CallableResponseEmitter;use AndrewDyer\ShutdownHandler\ShutdownHandler;use Psr\Http\Message\ResponseInterface;use Psr\Http\Message\ServerRequestInterface;
 
 $shutdownHandler = new ShutdownHandler(
     $request,
