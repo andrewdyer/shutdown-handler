@@ -1,37 +1,181 @@
-![PHP Package Template](https://public-assets.andrewdyer.rocks/images/covers/php-package-template.png)
+# Slim Error
 
-# PHP Package Template
+A composable error handling layer for Slim applications, enabling consistent and extensible handling of application failures.
 
-A template for creating PHP 8.3+ packages.
+## Introduction
 
-## ⚖️ License
+This library integrates with [Slim Framework 4](https://www.slimframework.com/) and leverages [PSR-7 HTTP Message](https://www.php-fig.org/psr/psr-7/) standards to convert fatal shutdown failures into consistent HTTP responses. It achieves this through pluggable responder and emitter strategies, allowing applications to compose error handling logic that is both extensible and framework-aligned.
+
+## Prerequisites
+
+- **[PHP](https://www.php.net/)**: Version 8.3 or higher is required.
+- **[Composer](https://getcomposer.org/)**: Dependency management tool for PHP.
+
+## Installation
+
+```bash
+composer require andrewdyer/slim-error
+```
+
+## Features
+
+Slim Error provides a composable error handling layer for Slim applications. Features can be adopted independently depending on your needs.
+
+### Pluggable Error Responders
+
+Error responders define how errors are transformed into HTTP responses.
+
+Implement the `ErrorResponderInterface` to customise response structure and content:
+
+```php
+use AndrewDyer\Slim\Error\Contracts\ErrorResponderInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Throwable;
+
+final class MyErrorResponder implements ErrorResponderInterface
+{
+    public function createResponse(
+        ServerRequestInterface $request,
+        Throwable $exception,
+        bool $displayErrorDetails
+    ): ResponseInterface {
+        // Custom response logic
+    }
+}
+```
+
+Alternatively, reuse existing logic with the `CallableErrorResponder` adapter:
+
+```php
+use AndrewDyer\Slim\Error\Adapters\CallableErrorResponder;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Throwable;
+
+$errorResponder = new CallableErrorResponder(
+    static fn (
+        ServerRequestInterface $request,
+        Throwable $exception,
+        bool $displayErrorDetails
+    ): ResponseInterface => $httpErrorHandler(
+        $request,
+        $exception,
+        $displayErrorDetails,
+        false,
+        false
+    )
+);
+```
+
+The callable must match the `(ServerRequestInterface, Throwable, bool): ResponseInterface` signature.
+
+### Flexible Response Emitters
+
+Response emitters are responsible for sending responses to the client.
+
+Implement the `ResponseEmitterInterface` to control emission behaviour:
+
+```php
+use AndrewDyer\Slim\Error\Contracts\ResponseEmitterInterface;
+use Psr\Http\Message\ResponseInterface;
+
+final class MyResponseEmitter implements ResponseEmitterInterface
+{
+    public function emit(ResponseInterface $response): void
+    {
+        // Custom emit logic
+    }
+}
+```
+
+Or wrap an existing emitter using the `CallableResponseEmitter` adapter:
+
+```php
+use AndrewDyer\Slim\Error\Adapters\CallableResponseEmitter;
+use Psr\Http\Message\ResponseInterface;
+
+$responseEmitter = new CallableResponseEmitter(
+    static fn (ResponseInterface $response): void => $slimEmitter->emit($response)
+);
+```
+
+The adapter wraps an existing emitter implementation.
+
+### Shutdown Handling
+
+The shutdown handler captures fatal errors during application execution and converts them into consistent HTTP responses.
+
+Once a responder and emitter are configured, register the handler:
+
+```php
+use AndrewDyer\Slim\Error\Handlers\ShutdownHandler;
+
+$shutdownHandler = new ShutdownHandler(
+    $request,
+    $errorResponder,
+    $responseEmitter,
+    $displayErrorDetails
+);
+
+register_shutdown_function($shutdownHandler);
+```
+
+This ensures fatal errors are intercepted and transformed into structured responses.
+
+#### Complete Slim integration
+
+A typical Slim integration using callable adapters might look like:
+
+```php
+use AndrewDyer\Slim\Error\Adapters\CallableErrorResponder;
+use AndrewDyer\Slim\Error\Adapters\CallableResponseEmitter;
+use AndrewDyer\Slim\Error\Handlers\ShutdownHandler;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Throwable;
+
+$shutdownHandler = new ShutdownHandler(
+    $request,
+    new CallableErrorResponder(
+        static fn (
+            ServerRequestInterface $request,
+            Throwable $exception,
+            bool $displayErrorDetails
+        ): ResponseInterface => $httpErrorHandler(
+            $request,
+            $exception,
+            $displayErrorDetails,
+            false,
+            false
+        )
+    ),
+    new CallableResponseEmitter(
+        static fn (ResponseInterface $response): void => $responseEmitter->emit($response)
+    ),
+    $displayErrorDetails
+);
+
+register_shutdown_function($shutdownHandler);
+```
+
+This approach allows existing Slim error handling and response emission logic to be reused without modification.
+
+### Composable Architecture
+
+Slim Error is designed for composability. Responders and emitters can be freely combined to suit your application.
+
+```php
+$shutdownHandler = new ShutdownHandler(
+    $request,
+    $errorResponder,
+    $responseEmitter,
+    $displayErrorDetails
+);
+```
+
+By decoupling responsibilities, the library enables flexible integration, easier testing, and long-term maintainability.
+
+## License
 
 Licensed under the [MIT license](https://opensource.org/licenses/MIT) and is free for private or commercial projects.
-
-## ✨ Introduction
-
-This template provides a solid foundation for building modern PHP packages. It’s designed to help you hit the ground running and focus on building your package functionality without worrying about boilerplate setup like autoloading, testing, or Composer configuration.
-
-## 📋 Prerequisites
-
-Before you begin, ensure you have met the following requirements:
-
-- **PHP**: Version 8.3 or higher.
-- **[Composer](https://getcomposer.org)**: A dependency manager for PHP, used to install packages and autoload your code.
-
-## 🛠️ Features
-
-This template includes the following tools and configurations:
-
-- [PSR-4 autoloading](https://www.php-fig.org/psr/psr-4/) via Composer
-- [PHPUnit](https://phpunit.de/) for unit testing to ensure the reliability of your code.
-- [PHP Coding Standards Fixer](https://cs.symfony.com/) for maintaining consistent code style.
-- CI (Continuous Integration) setup with [GitHub Actions](https://github.com/features/actions) for automated testing.
-
-## 🚀 Getting Started
-
-If you like what you've seen so far and think this setup fits your needs, you can quickly get started by clicking the **Use this template** button at the top of the repository on GitHub.
-
-## 🤝 Contributing
-
-Found a bug or want to improve this package? Feel free to open a pull request or submit an issue.
