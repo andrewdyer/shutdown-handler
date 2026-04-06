@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AndrewDyer\Slim\Error\Handlers;
+namespace AndrewDyer\Slim\Error;
 
 use AndrewDyer\Slim\Error\Contracts\ErrorResponderInterface;
 use AndrewDyer\Slim\Error\Contracts\ResponseEmitterInterface;

@@ -109,7 +109,7 @@ The shutdown handler captures fatal errors during application execution and conv
 Once a responder and emitter are configured, register the handler:
 
 ```php
-use AndrewDyer\Slim\Error\Handlers\ShutdownHandler;
+use AndrewDyer\Slim\Error\ShutdownHandler;
 
 $shutdownHandler = new ShutdownHandler(
     $request,
@@ -128,12 +128,7 @@ This ensures fatal errors are intercepted and transformed into structured respon
 A typical Slim integration using callable adapters might look like:
 
 ```php
-use AndrewDyer\Slim\Error\Adapters\CallableErrorResponder;
-use AndrewDyer\Slim\Error\Adapters\CallableResponseEmitter;
-use AndrewDyer\Slim\Error\Handlers\ShutdownHandler;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Throwable;
+use AndrewDyer\Slim\Error\Adapters\CallableErrorResponder;use AndrewDyer\Slim\Error\Adapters\CallableResponseEmitter;use AndrewDyer\Slim\Error\ShutdownHandler;use Psr\Http\Message\ResponseInterface;use Psr\Http\Message\ServerRequestInterface;
 
 $shutdownHandler = new ShutdownHandler(
     $request,
