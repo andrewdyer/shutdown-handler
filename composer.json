@@ -5,6 +5,18 @@
   "keywords": ["php", "slim", "shutdown", "error-handling", "psr-7"],
   "type": "library",
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Andrew Dyer",
+      "homepage": "https://andrewdyer.rocks",
+      "role": "Developer"
+    }
+  ],
+  "homepage": "https://github.com/andrewdyer/shutdown-handler",
+  "support": {
+    "issues": "https://github.com/andrewdyer/shutdown-handler/issues",
+    "source": "https://github.com/andrewdyer/shutdown-handler"
+  },
   "autoload": {
     "psr-4": {
       "AndrewDyer\\ShutdownHandler\\": "src/"
