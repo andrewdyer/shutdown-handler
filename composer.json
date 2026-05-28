@@ -1,6 +1,5 @@
 {
   "name": "andrewdyer/shutdown-handler",
-  "version": "0.1.0",
   "description": "A shutdown handler for Slim Framework applications that converts fatal errors into consistent HTTP responses through pluggable responder and emitter strategies",
   "keywords": ["php", "slim", "shutdown", "error-handling", "psr-7"],
   "type": "library",
