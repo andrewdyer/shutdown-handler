@@ -1,7 +1,6 @@
 # Shutdown Handler
 
-A shutdown handler for [Slim Framework](https://www.slimframework.com/) applications that converts fatal errors into consistent HTTP responses through pluggable responder and emitter strategies.
-
+A [Slim Framework](https://www.slimframework.com/) library for converting fatal errors into HTTP responses using configurable responders and emitters.
 
 [![Latest Stable Version](http://poser.pugx.org/andrewdyer/shutdown-handler/v?style=flat-square)](https://packagist.org/packages/andrewdyer/shutdown-handler)
 [![Total Downloads](http://poser.pugx.org/andrewdyer/shutdown-handler/downloads?style=flat-square)](https://packagist.org/packages/andrewdyer/shutdown-handler)
@@ -10,7 +9,7 @@ A shutdown handler for [Slim Framework](https://www.slimframework.com/) applicat
 
 ## Introduction
 
-This library provides a shutdown handler for Slim applications. It intercepts fatal errors and transforms them into consistent HTTP responses, maintaining predictable application behaviour. The handler is fully composable, allowing different responder and emitter implementations to be combined as required, and integrates seamlessly with existing Slim error handling and response emission workflows.
+This library provides a shutdown handler for Slim applications by intercepting fatal errors and converting them into consistent HTTP responses using configurable responder and emitter strategies. The handler is fully composable, supports multiple implementations, and integrates with existing Slim error handling and response emission workflows.
 
 ## Prerequisites
 
