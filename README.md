@@ -1,15 +1,12 @@
-![Shutdown Handler](https://public-assets.andrewdyer.rocks/images/covers/shutdown-handler.png)
-
-<p align="center">
-  <a href="https://packagist.org/packages/andrewdyer/shutdown-handler"><img src="https://poser.pugx.org/andrewdyer/shutdown-handler/v/stable?style=for-the-badge" alt="Latest Stable Version"></a>
-  <a href="https://packagist.org/packages/andrewdyer/shutdown-handler"><img src="https://poser.pugx.org/andrewdyer/shutdown-handler/downloads?style=for-the-badge" alt="Total Downloads"></a>
-  <a href="https://packagist.org/packages/andrewdyer/shutdown-handler"><img src="https://poser.pugx.org/andrewdyer/shutdown-handler/license?style=for-the-badge" alt="License"></a>
-  <a href="https://packagist.org/packages/andrewdyer/shutdown-handler"><img src="https://poser.pugx.org/andrewdyer/shutdown-handler/require/php?style=for-the-badge" alt="PHP Version Required"></a>
-</p>
-
 # Shutdown Handler
 
 A shutdown handler for [Slim Framework](https://www.slimframework.com/) applications that converts fatal errors into consistent HTTP responses through pluggable responder and emitter strategies.
+
+
+[![Latest Stable Version](http://poser.pugx.org/andrewdyer/shutdown-handler/v?style=flat-square)](https://packagist.org/packages/andrewdyer/shutdown-handler)
+[![Total Downloads](http://poser.pugx.org/andrewdyer/shutdown-handler/downloads?style=flat-square)](https://packagist.org/packages/andrewdyer/shutdown-handler)
+[![License](http://poser.pugx.org/andrewdyer/shutdown-handler/license?style=flat-square)](https://packagist.org/packages/andrewdyer/shutdown-handler)
+[![PHP Version Require](http://poser.pugx.org/andrewdyer/shutdown-handler/require/php?style=flat-square)](https://packagist.org/packages/andrewdyer/shutdown-handler)
 
 ## Introduction
 
