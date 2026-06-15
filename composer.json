@@ -1,6 +1,6 @@
 {
   "name": "andrewdyer/shutdown-handler",
-  "description": "A Slim library for converting fatal errors into HTTP responses using configurable responders and emitters",
+  "description": "A shutdown handler for Slim Framework applications that converts fatal errors into consistent HTTP responses",
   "keywords": ["php", "slim", "shutdown", "error-handling", "psr-7"],
   "type": "library",
   "license": "MIT",
